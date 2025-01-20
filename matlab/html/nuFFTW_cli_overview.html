@@ -1,0 +1,165 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>nuFFTW command-line inetrface overview</title><meta name="generator" content="MATLAB 8.0"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2013-09-03"><meta name="DC.source" content="nuFFTW_cli_overview.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>nuFFTW command-line inetrface overview</h1><!--introduction--><p>nuFFTW is an auto-tuning, parallel library for computation of non-uniform fast Fourier transforms (nuFFTs).</p><p>The command-line interface consists of a several binaries that can be called from a terminal:</p><div><ul><li><tt>nudft_double</tt>, <tt>nudft_float</tt> - for computation of exact, slow   non-uniform discrete Fourier transforms (nuDFTs).</li><li><tt>nufft_double</tt>, <tt>nufft_float</tt> - for computation of non-uniform fast   Fourier transforms (nuFFTs).</li><li><tt>write_nufft_impfile_double</tt>, <tt>write_nufft_impfile_float</tt> - computation   of a nuFFT implementations parameters and writing them to a nuFFT   implementation file for future use.</li><li><tt>nufftw_double</tt>, <tt>nufftw_float</tt> - auto-tune the nuFFT to find the   performance-optimal implementation from a space of error-equivalent   implementations.</li></ul></div><p>For usage examples, refer to <tt>nuFFT_cli_demo.html</tt> and <tt>nuFFTW_cli_demo.html</tt> .</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">nuDFT (exact (slow) non-uniform discrete Fourier transform)</a></li><li><a href="#2">nuFFT (non-uniform fast Fourier transform)</a></li><li><a href="#3">Write a nuFFT implementation file</a></li><li><a href="#4">nuFFTW - auto-tune the nuFFT</a></li><li><a href="#5">Argument descriptions</a></li><li><a href="#6">Trajectory datafile format</a></li></ul></div><h2>nuDFT (exact (slow) non-uniform discrete Fourier transform)<a name="1"></a></h2><div><ul><li><tt>nudft_double Nthreads direction imagefilename kdatafilename Ndim imagesize trajfilename</tt></li><li><tt>nudft_float  Nthreads direction imagefilename kdatafilename Ndim imagesize trajfilename</tt></li></ul></div><h2>nuFFT (non-uniform fast Fourier transform)<a name="2"></a></h2><div><ul><li>Specify nuFFT implementation parameters in the command line:</li></ul></div><p><tt>nufft_double Nthreads direction imagefilename kdatafilename Ndim imagesize maxerr_power alpha resamplingmethod trajfilename</tt></p><p><tt>nufft_float  Nthreads direction imagefilename kdatafilename Ndim imagesize maxerr_power alpha resamplingmethod trajfilename</tt></p><div><ul><li>Get nuFFT implementation parameters from a pre-written nuFFT implementation file:</li></ul></div><p><tt>nufft_double Nthreads direction imagefilename kdatafilename impfilename</tt></p><p><tt>nufft_float  Nthreads direction imagefilename kdatafilename impfilename</tt></p><h2>Write a nuFFT implementation file<a name="3"></a></h2><div><ul><li><tt>write_nufft_impfile_double Nthreads Ndim imagesize&nbsp;maxerr_power alpha resamplingmethod trajfilename impfilename</tt></li><li><tt>write_nufft_impfile_float  Nthreads Ndim imagesize&nbsp;maxerr_power alpha resamplingmethod trajfilename impfilename</tt></li></ul></div><h2>nuFFTW - auto-tune the nuFFT<a name="4"></a></h2><div><ul><li>Auto-tune and save best implementation to file:</li></ul></div><p><tt>nufftw_double Nthreads Ndim imagesize maxerr_power alphamin alphamax nalpha resamplingmethod tuning_heuristic trajfilename impfilename</tt></p><p><tt>nufftw_float  Nthreads Ndim imagesize maxerr_power alphamin alphamax nalpha resamplingmethod tuning_heuristic trajfilename impfilename</tt></p><div><ul><li>Auto-tune and just print what the best implementation was:</li></ul></div><p><tt>nufftw_double Nthreads Ndim imagesize maxerr_power alphamin alphamax nalpha resamplingmethod tuning_heuristic trajfilename</tt></p><p><tt>nufftw_float  Nthreads Ndim imagesize maxerr_power alphamin alphamax nalpha resamplingmethod tuning_heuristic trajfilename</tt></p><h2>Argument descriptions<a name="5"></a></h2><div><ul><li><tt>Nthreads</tt> - integer number of threads.</li><li><tt>direction</tt> - direction of Fourier transform, either <tt>forward</tt> or <tt>adjoint</tt>.</li><li><tt>trajfilename</tt> - name of trajectory data file, which contains consecutive   sets of k-space coordinates and dcfs (not sqrt of dcfs!) per each   k-space sampling point, written in binary format, in either double or   float. (See bottom of this page for an example.)</li><li><tt>Ndim</tt> - integer number of dimensions.</li><li><tt>imagesize</tt> - set of <tt>Ndim</tt> image sizes in pixels in each dimension</li><li><tt>imagefilename</tt> - name of file containing complex uniform data in   either double or float precision, as consecutive pairs of real and   imaginary values. Data size should correspond to <tt>prod(imagesize)</tt>.   (Similar to a .cfl or .cdb file.)</li><li><tt>kdatafilename</tt> - name of file containing complex non-uniform data in   either double or float precision, as consecutive pairs of real and   imaginary values. Data size should correspond to number of non-uniform   sampling locations in the file <tt>trajfilename</tt>. (Similar to a .cfl or .cdb file.)</li><li><tt>maxerr_power</tt> - maximum aliasing error <b>(in powers of 10, i.e. for   <tt>maxerr = 1e-3</tt>, insert <tt>maxerr_power = -3</tt>)</b>.</li><li><tt>alpha</tt> - grid oversampling ratio.</li><li><tt>alphamin</tt> - minimum oversampling ratio for tuning.</li><li><tt>alphamax</tt> - maximum oversampling ratio for tuning.</li><li><tt>nalpha</tt> - number of oversampling ratios (nuFFT implementations) for tuning.</li><li><tt>resamplingmethod</tt> - either <tt>spm</tt> (full precomputation) or <tt>onthefly</tt> (no precomputation).</li><li><tt>tuning_heuristic</tt> - either <tt>nufft</tt> (to tune the entire nuFFT   computation) or <tt>fftw</tt> (to only tune the FFT stage of the nuFFT).</li><li><tt>impfilename</tt> - name of a previously-written nuFFT implementation file.</li></ul></div><h2>Trajectory datafile format<a name="6"></a></h2><p>A trajectory datafile should contain consecutive sets of k-space coordinates and dcfs (not sqrt of dcfs!) per each k-space sampling point, written in binary format, in the desired precision (double or float).</p><p>For example, a 3-dimensional trajectory's datafile will be formatted as following:</p><p><tt>[sample_1_x_coordinate, sample_1_y_coordinate, sample_1_z_coordinate, sample_1_dcf, sample_2_x_coordinate, sample_2_y_coordinate, sample_2_z_coordinate, sample_2_dcf, ... ]</tt></p><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2012b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% nuFFTW command-line inetrface overview
+% nuFFTW is an auto-tuning, parallel library for computation of non-uniform
+% fast Fourier transforms (nuFFTs).
+%
+% The command-line interface consists of a several binaries that can be
+% called from a terminal:
+%
+% * |nudft_double|, |nudft_float| - for computation of exact, slow
+%   non-uniform discrete Fourier transforms (nuDFTs).
+% * |nufft_double|, |nufft_float| - for computation of non-uniform fast
+%   Fourier transforms (nuFFTs).
+% * |write_nufft_impfile_double|, |write_nufft_impfile_float| - computation
+%   of a nuFFT implementations parameters and writing them to a nuFFT
+%   implementation file for future use.
+% * |nufftw_double|, |nufftw_float| - auto-tune the nuFFT to find the
+%   performance-optimal implementation from a space of error-equivalent
+%   implementations.
+%
+% For usage examples, refer to |nuFFT_cli_demo.html| and |nuFFTW_cli_demo.html| .
+
+%% nuDFT (exact (slow) non-uniform discrete Fourier transform)
+% * |nudft_double Nthreads direction imagefilename kdatafilename Ndim imagesize trajfilename|
+% * |nudft_float  Nthreads direction imagefilename kdatafilename Ndim imagesize trajfilename|
+
+%% nuFFT (non-uniform fast Fourier transform)
+% * Specify nuFFT implementation parameters in the command line:
+% 
+% |nufft_double Nthreads direction imagefilename kdatafilename Ndim imagesize maxerr_power alpha resamplingmethod trajfilename|
+%
+% |nufft_float  Nthreads direction imagefilename kdatafilename Ndim imagesize maxerr_power alpha resamplingmethod trajfilename|
+%
+% * Get nuFFT implementation parameters from a pre-written nuFFT
+% implementation file:
+%
+% |nufft_double Nthreads direction imagefilename kdatafilename impfilename|
+%
+% |nufft_float  Nthreads direction imagefilename kdatafilename impfilename|
+
+%% Write a nuFFT implementation file
+% * |write_nufft_impfile_double Nthreads Ndim imagesize maxerr_power alpha resamplingmethod trajfilename impfilename|
+% * |write_nufft_impfile_float  Nthreads Ndim imagesize maxerr_power alpha resamplingmethod trajfilename impfilename|
+
+%% nuFFTW - auto-tune the nuFFT
+% * Auto-tune and save best implementation to file:
+%
+% |nufftw_double Nthreads Ndim imagesize maxerr_power alphamin alphamax nalpha resamplingmethod tuning_heuristic trajfilename impfilename|
+%
+% |nufftw_float  Nthreads Ndim imagesize maxerr_power alphamin alphamax nalpha resamplingmethod tuning_heuristic trajfilename impfilename|
+%
+% * Auto-tune and just print what the best implementation was:
+%
+% |nufftw_double Nthreads Ndim imagesize maxerr_power alphamin alphamax nalpha resamplingmethod tuning_heuristic trajfilename|
+%
+% |nufftw_float  Nthreads Ndim imagesize maxerr_power alphamin alphamax nalpha resamplingmethod tuning_heuristic trajfilename|
+
+%% Argument descriptions
+% * |Nthreads| - integer number of threads.
+% * |direction| - direction of Fourier transform, either |forward| or |adjoint|.
+% * |trajfilename| - name of trajectory data file, which contains consecutive
+%   sets of k-space coordinates and dcfs (not sqrt of dcfs!) per each
+%   k-space sampling point, written in binary format, in either double or
+%   float. (See bottom of this page for an example.)
+% * |Ndim| - integer number of dimensions.
+% * |imagesize| - set of |Ndim| image sizes in pixels in each dimension
+% * |imagefilename| - name of file containing complex uniform data in
+%   either double or float precision, as consecutive pairs of real and
+%   imaginary values. Data size should correspond to |prod(imagesize)|.
+%   (Similar to a .cfl or .cdb file.)
+% * |kdatafilename| - name of file containing complex non-uniform data in
+%   either double or float precision, as consecutive pairs of real and
+%   imaginary values. Data size should correspond to number of non-uniform
+%   sampling locations in the file |trajfilename|. (Similar to a .cfl or .cdb file.)
+% * |maxerr_power| - maximum aliasing error *(in powers of 10, i.e. for
+%   |maxerr = 1e-3|, insert |maxerr_power = -3|)*.
+% * |alpha| - grid oversampling ratio.
+% * |alphamin| - minimum oversampling ratio for tuning.
+% * |alphamax| - maximum oversampling ratio for tuning.
+% * |nalpha| - number of oversampling ratios (nuFFT implementations) for tuning.
+% * |resamplingmethod| - either |spm| (full precomputation) or |onthefly| (no precomputation).
+% * |tuning_heuristic| - either |nufft| (to tune the entire nuFFT
+%   computation) or |fftw| (to only tune the FFT stage of the nuFFT).
+% * |impfilename| - name of a previously-written nuFFT implementation file.
+
+%% Trajectory datafile format
+% A trajectory datafile should contain consecutive sets of k-space
+% coordinates and dcfs (not sqrt of dcfs!) per each k-space sampling point,
+% written in binary format, in the desired precision (double or float).
+%
+% For example, a 3-dimensional trajectory's datafile will be formatted as
+% following:
+%
+% |[sample_1_x_coordinate, sample_1_y_coordinate, sample_1_z_coordinate,
+% sample_1_dcf, sample_2_x_coordinate, sample_2_y_coordinate,
+% sample_2_z_coordinate, sample_2_dcf, ... ]|
+##### SOURCE END #####
+--></body></html>

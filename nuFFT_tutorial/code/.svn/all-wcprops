@@ -1,0 +1,107 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/lab/!svn/ver/1306/shared/mritut/nuFFT_tutorial/code
+END
+nufft_grid.m
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/lab/!svn/ver/1800/shared/mritut/nuFFT_tutorial/code/nufft_grid.m
+END
+adjoint_nufft.m
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/lab/!svn/ver/1288/shared/mritut/nuFFT_tutorial/code/adjoint_nufft.m
+END
+AliasingAmplitude.m
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/lab/!svn/ver/1288/shared/mritut/nuFFT_tutorial/code/AliasingAmplitude.m
+END
+nufft_example.m
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/lab/!svn/ver/2099/shared/mritut/nuFFT_tutorial/code/nufft_example.m
+END
+KaiserBesselOptimalBeta.m
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/lab/!svn/ver/1288/shared/mritut/nuFFT_tutorial/code/KaiserBesselOptimalBeta.m
+END
+KaiserBessel_FourierDomain.m
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/lab/!svn/ver/1288/shared/mritut/nuFFT_tutorial/code/KaiserBessel_FourierDomain.m
+END
+MaxAliasingAmplitude.m
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/lab/!svn/ver/1288/shared/mritut/nuFFT_tutorial/code/MaxAliasingAmplitude.m
+END
+init_nufft.m
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/lab/!svn/ver/1800/shared/mritut/nuFFT_tutorial/code/init_nufft.m
+END
+nufft_tutorial.m
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/lab/!svn/ver/1818/shared/mritut/nuFFT_tutorial/code/nufft_tutorial.m
+END
+forward_nufft.m
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/lab/!svn/ver/1288/shared/mritut/nuFFT_tutorial/code/forward_nufft.m
+END
+KaiserBessel_ImageDomain.m
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/lab/!svn/ver/1288/shared/mritut/nuFFT_tutorial/code/KaiserBessel_ImageDomain.m
+END
+compute_gridding_matrix.m
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/lab/!svn/ver/1800/shared/mritut/nuFFT_tutorial/code/compute_gridding_matrix.m
+END
+compute_deapodization_matrix.m
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/lab/!svn/ver/1478/shared/mritut/nuFFT_tutorial/code/compute_deapodization_matrix.m
+END
+KernelSamplingRatio.m
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/lab/!svn/ver/1288/shared/mritut/nuFFT_tutorial/code/KernelSamplingRatio.m
+END
+get_image_errors.m
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/lab/!svn/ver/1306/shared/mritut/nuFFT_tutorial/code/get_image_errors.m
+END
+OversampledImageSize.m
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/lab/!svn/ver/1288/shared/mritut/nuFFT_tutorial/code/OversampledImageSize.m
+END
+KernelWidth.m
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/lab/!svn/ver/1288/shared/mritut/nuFFT_tutorial/code/KernelWidth.m
+END

@@ -1,0 +1,550 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>nuFFTW command-line interface demo</title><meta name="generator" content="MATLAB 8.0"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2013-09-03"><meta name="DC.source" content="nuFFTW_cli_demo.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>nuFFTW command-line interface demo</h1><!--introduction--><p>This demo explains how to use the command-line interface of the nuFFTW library.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">nuDFT</a></li><li><a href="#3">nuFFT</a></li><li><a href="#7">Write nuFFT implementation to file</a></li><li><a href="#11">nuFFTW - Auto-tune the nuFFT</a></li></ul></div><h2>nuDFT<a name="1"></a></h2><pre class="codeinput"><span class="syscmd">!../bin/nudft_double 1 adjoint ../data/spiral2d_phantom_imagenudft.cdb ../data/spiral2d_phantom_data.cdb 2 128 128 ../data/spiral2d_phantom_traj.db</span>
+imagenudft = reshape(vec2complex(readbin(<span class="string">'../data/spiral2d_phantom_imagenudft.cdb'</span>,<span class="string">'double'</span>)),128,128);
+</pre><pre class="codeoutput">** nuDFT **
+transform initialization and data loading: 0.00172496s
+adjoint transformation: 26.3397s
+</pre><p>Wow, that's a lot of time for such a small trajectory!</p><h2>nuFFT<a name="3"></a></h2><pre class="codeinput"><span class="syscmd">!../bin/nufft_double 1 adjoint ../data/spiral2d_phantom_imagenufft.cdb ../data/spiral2d_phantom_data.cdb 2 128 128 -3 2 spm ../data/spiral2d_phantom_traj.db</span>
+imagenufft = reshape(vec2complex(readbin(<span class="string">'../data/spiral2d_phantom_imagenufft.cdb'</span>,<span class="string">'double'</span>)),128,128);
+</pre><pre class="codeoutput">** nuFFT **
+transform initialization and data loading: 
+	computing implementation data: 0.0837891s
+	initializing external libraries: 1.00393s
+	tuning: 0.0131321s
+1.10279s
+adjoint transformation: 0.00707006s
+deleting nuFFT implementation
+cleaning external libraries
+</pre><p>That was faster.</p><p>Let's check the accuracy:</p><pre class="codeinput">e = get_image_errors(imagenudft,imagenufft);
+</pre><pre class="codeoutput">max error: 0.0014982
+</pre><p>The error between the direct nuFT (nuDFT) and the nuFFT matches the input maximum aliasing error with which we created the nuFFT implementation.</p><pre class="codeinput">figure
+subplot(131)
+imshowz(imagenudft)
+title(<span class="string">'adjoint nuDFT'</span>)
+subplot(132)
+imshowz(imagenufft)
+title(<span class="string">'adjoint nuFFT'</span>)
+subplot(133)
+imshowz(e)
+colorbar
+title(<span class="string">'normalized error'</span>)
+</pre><img vspace="5" hspace="5" src="nuFFTW_cli_demo_01.png" alt=""> <h2>Write nuFFT implementation to file<a name="7"></a></h2><pre class="codeinput"><span class="syscmd">!../bin/write_nufft_impfile_double 1 2 128 128 -3 2 spm  ../data/spiral2d_phantom_traj.db ../data/spiral2d_phantom.imp</span>
+</pre><pre class="codeoutput">** write nuFFT implementation file **
+computing implementation data: 0.084296s
+writing implementation to file: 0.00577688s
+deleting nuFFT implementation
+</pre><p>Now we will perform an adjoint and forward nuFFT using this pre-written nuFFT implememntation file</p><pre class="codeinput"><span class="syscmd">!../bin/nufft_double 1 adjoint ../data/spiral2d_phantom_imagenufft.cdb ../data/spiral2d_phantom_data.cdb ../data/spiral2d_phantom.imp</span>
+</pre><pre class="codeoutput">** nuFFT **
+transform initialization and data loading: 
+	loading implementation from file: 0.00719094s
+	initializing external libraries: 1.00409s
+	tuning: 0.0135119s
+1.02574s
+adjoint transformation: 0.00709915s
+deleting nuFFT implementation
+cleaning external libraries
+</pre><pre class="codeinput"><span class="syscmd">!../bin/nufft_double 1 forward ../data/spiral2d_phantom_imagenufft.cdb ../data/spiral2d_phantom_data2.cdb ../data/spiral2d_phantom.imp</span>
+</pre><pre class="codeoutput">** nuFFT **
+transform initialization and data loading: 
+	loading implementation from file: 0.00727987s
+	initializing external libraries: 1.00408s
+	tuning: 0.0130732s
+1.02508s
+forward transformation: 0.00851583s
+deleting nuFFT implementation
+cleaning external libraries
+</pre><p>Check consistency between the forward and adjoint operators:</p><pre class="codeinput">trajdata = readbin(<span class="string">'../data/spiral2d_phantom_traj.db'</span>,<span class="string">'double'</span>);
+Nsamples = length(trajdata)/3;
+trajdata = reshape(trajdata,3,Nsamples);
+trajectory = trajdata(1:2,:)';
+dcf = trajdata(3,:)';
+
+kdata = vec2complex(readbin(<span class="string">'../data/spiral2d_phantom_data.cdb'</span>,<span class="string">'double'</span>));
+kdata_dc = kdata .* sqrt(dcf);
+
+imagenufft_vec = vec2complex(readbin(<span class="string">'../data/spiral2d_phantom_imagenufft.cdb'</span>,<span class="string">'double'</span>));
+
+kdata_dc2 = vec2complex(readbin(<span class="string">'../data/spiral2d_phantom_data2.cdb'</span>,<span class="string">'double'</span>));
+
+kdata_dc2'*kdata_dc-imagenufft_vec'*imagenufft_vec
+</pre><pre class="codeoutput">ans =
+       2.72848410531878e-12 +   1.4210854715202e-13i
+</pre><h2>nuFFTW - Auto-tune the nuFFT<a name="11"></a></h2><pre class="codeinput"><span class="syscmd">!../bin/nufftw_double 1 2 128 128 -3 1.2 2 20 spm nufft ../data/spiral2D_phantom_traj.db ../data/spiral2D_phantom_optimal.imp</span>
+</pre><pre class="codeoutput">** nuFFTW **
+initializing external libraries: 1.02156s
+implementation no. 0
+computing implementation data: 0.237301s
+tuning: 0.0151532s
+adjoint transformation: 0.00600195s
+adjoint transformation: 0.004915s
+adjoint transformation: 0.00489306s
+adjoint transformation: 0.00488782s
+adjoint transformation: 0.00498605s
+adjoint transformation: 0.00492191s
+adjoint transformation: 0.00504208s
+adjoint transformation: 0.00490403s
+adjoint transformation: 0.00485802s
+adjoint transformation: 0.005054s
+average runtime: 0.00504639s
+implementation no. 1
+computing implementation data: 0.197322s
+tuning: 0.0131521s
+adjoint transformation: 0.00484419s
+adjoint transformation: 0.00429487s
+adjoint transformation: 0.00431299s
+adjoint transformation: 0.00418687s
+adjoint transformation: 0.00435495s
+adjoint transformation: 0.00414896s
+adjoint transformation: 0.00414109s
+adjoint transformation: 0.00414896s
+adjoint transformation: 0.00435495s
+adjoint transformation: 0.00420499s
+average runtime: 0.00429928s
+deleting nuFFT implementation
+implementation no. 2
+computing implementation data: 0.174408s
+tuning: 0.0140679s
+adjoint transformation: 0.00563097s
+adjoint transformation: 0.00506592s
+adjoint transformation: 0.00492191s
+adjoint transformation: 0.00492096s
+adjoint transformation: 0.00512218s
+adjoint transformation: 0.00517201s
+adjoint transformation: 0.00496197s
+adjoint transformation: 0.004951s
+adjoint transformation: 0.00496292s
+adjoint transformation: 0.00492215s
+average runtime: 0.0050632s
+deleting nuFFT implementation
+implementation no. 3
+computing implementation data: 0.161691s
+tuning: 0.0115891s
+adjoint transformation: 0.00553083s
+adjoint transformation: 0.00458384s
+adjoint transformation: 0.00453496s
+adjoint transformation: 0.00466919s
+adjoint transformation: 0.00454211s
+adjoint transformation: 0.00455809s
+adjoint transformation: 0.00473595s
+adjoint transformation: 0.0045321s
+adjoint transformation: 0.00451207s
+adjoint transformation: 0.00452113s
+average runtime: 0.00467203s
+deleting nuFFT implementation
+implementation no. 4
+computing implementation data: 0.150375s
+tuning: 0.011658s
+adjoint transformation: 0.00536489s
+adjoint transformation: 0.00446582s
+adjoint transformation: 0.00431108s
+adjoint transformation: 0.00437784s
+adjoint transformation: 0.00437403s
+adjoint transformation: 0.00432801s
+adjoint transformation: 0.00433016s
+adjoint transformation: 0.00431418s
+adjoint transformation: 0.00454497s
+adjoint transformation: 0.0043509s
+average runtime: 0.00447619s
+deleting nuFFT implementation
+implementation no. 5
+computing implementation data: 0.133581s
+tuning: 0.01121s
+adjoint transformation: 0.00496507s
+adjoint transformation: 0.00404191s
+adjoint transformation: 0.00399995s
+adjoint transformation: 0.00420713s
+adjoint transformation: 0.00399899s
+adjoint transformation: 0.00398588s
+adjoint transformation: 0.00404906s
+adjoint transformation: 0.00408888s
+adjoint transformation: 0.00399995s
+adjoint transformation: 0.00398898s
+average runtime: 0.00413258s
+deleting nuFFT implementation
+implementation no. 6
+computing implementation data: 0.131347s
+tuning: 0.010895s
+adjoint transformation: 0.00567508s
+adjoint transformation: 0.00520706s
+adjoint transformation: 0.00532103s
+adjoint transformation: 0.00489616s
+adjoint transformation: 0.00494599s
+adjoint transformation: 0.00501204s
+adjoint transformation: 0.00492311s
+adjoint transformation: 0.00502706s
+adjoint transformation: 0.00494504s
+adjoint transformation: 0.00491214s
+average runtime: 0.00508647s
+deleting nuFFT implementation
+implementation no. 7
+computing implementation data: 0.120973s
+tuning: 0.0104499s
+adjoint transformation: 0.00582194s
+adjoint transformation: 0.00494504s
+adjoint transformation: 0.00518513s
+adjoint transformation: 0.00492287s
+adjoint transformation: 0.00490499s
+adjoint transformation: 0.00501704s
+adjoint transformation: 0.005337s
+adjoint transformation: 0.00507593s
+adjoint transformation: 0.00492811s
+adjoint transformation: 0.00500989s
+average runtime: 0.00511479s
+deleting nuFFT implementation
+implementation no. 8
+computing implementation data: 0.114802s
+tuning: 0.0101941s
+adjoint transformation: 0.00538492s
+adjoint transformation: 0.00434709s
+adjoint transformation: 0.0044291s
+adjoint transformation: 0.00430512s
+adjoint transformation: 0.00432897s
+adjoint transformation: 0.00437212s
+adjoint transformation: 0.00430918s
+adjoint transformation: 0.00437999s
+adjoint transformation: 0.00438404s
+adjoint transformation: 0.00429606s
+average runtime: 0.00445366s
+deleting nuFFT implementation
+implementation no. 9
+computing implementation data: 0.11001s
+tuning: 0.00996494s
+adjoint transformation: 0.00514197s
+adjoint transformation: 0.00386381s
+adjoint transformation: 0.00392604s
+adjoint transformation: 0.0038619s
+adjoint transformation: 0.00409698s
+adjoint transformation: 0.00386691s
+adjoint transformation: 0.00381804s
+adjoint transformation: 0.00388002s
+adjoint transformation: 0.00405407s
+adjoint transformation: 0.00384712s
+average runtime: 0.00403569s
+deleting nuFFT implementation
+implementation no. 10
+computing implementation data: 0.109162s
+tuning: 0.0102491s
+adjoint transformation: 0.010159s
+adjoint transformation: 0.00924611s
+adjoint transformation: 0.00918508s
+adjoint transformation: 0.00936413s
+adjoint transformation: 0.00933218s
+adjoint transformation: 0.00942516s
+adjoint transformation: 0.00917196s
+adjoint transformation: 0.00918698s
+adjoint transformation: 0.00920391s
+adjoint transformation: 0.00921011s
+average runtime: 0.00934846s
+deleting nuFFT implementation
+implementation no. 11
+computing implementation data: 0.106411s
+tuning: 0.0102172s
+adjoint transformation: 0.00550699s
+adjoint transformation: 0.00458503s
+adjoint transformation: 0.00467706s
+adjoint transformation: 0.00459814s
+adjoint transformation: 0.00478697s
+adjoint transformation: 0.00458384s
+adjoint transformation: 0.00458407s
+adjoint transformation: 0.00458717s
+adjoint transformation: 0.00457692s
+adjoint transformation: 0.00464106s
+average runtime: 0.00471272s
+deleting nuFFT implementation
+implementation no. 12
+computing implementation data: 0.102811s
+tuning: 0.010361s
+adjoint transformation: 0.00576305s
+adjoint transformation: 0.00466108s
+adjoint transformation: 0.0045681s
+adjoint transformation: 0.00465107s
+adjoint transformation: 0.0045712s
+adjoint transformation: 0.00455189s
+adjoint transformation: 0.00455093s
+adjoint transformation: 0.00487113s
+adjoint transformation: 0.00457978s
+adjoint transformation: 0.00454402s
+average runtime: 0.00473123s
+deleting nuFFT implementation
+implementation no. 13
+computing implementation data: 0.099869s
+tuning: 0.011358s
+adjoint transformation: 0.00717211s
+adjoint transformation: 0.0061419s
+adjoint transformation: 0.00605702s
+adjoint transformation: 0.00605798s
+adjoint transformation: 0.00607109s
+adjoint transformation: 0.006073s
+adjoint transformation: 0.00646091s
+adjoint transformation: 0.00624204s
+adjoint transformation: 0.00607991s
+adjoint transformation: 0.00631213s
+average runtime: 0.00626681s
+deleting nuFFT implementation
+implementation no. 14
+computing implementation data: 0.0980971s
+tuning: 0.01056s
+adjoint transformation: 0.0125802s
+adjoint transformation: 0.0112429s
+adjoint transformation: 0.0113671s
+adjoint transformation: 0.0112491s
+adjoint transformation: 0.0112371s
+adjoint transformation: 0.0112648s
+adjoint transformation: 0.011838s
+adjoint transformation: 0.011354s
+adjoint transformation: 0.011595s
+adjoint transformation: 0.011234s
+average runtime: 0.0114962s
+deleting nuFFT implementation
+implementation no. 15
+computing implementation data: 0.0943499s
+tuning: 0.0105019s
+adjoint transformation: 0.00721598s
+adjoint transformation: 0.00608611s
+adjoint transformation: 0.00631309s
+adjoint transformation: 0.00599098s
+adjoint transformation: 0.00602889s
+adjoint transformation: 0.00600886s
+adjoint transformation: 0.00597286s
+adjoint transformation: 0.0061059s
+adjoint transformation: 0.00606608s
+adjoint transformation: 0.00603104s
+average runtime: 0.00618198s
+deleting nuFFT implementation
+implementation no. 16
+computing implementation data: 0.0918581s
+tuning: 0.0109632s
+adjoint transformation: 0.00953794s
+adjoint transformation: 0.00781894s
+adjoint transformation: 0.00774097s
+adjoint transformation: 0.00773096s
+adjoint transformation: 0.00776005s
+adjoint transformation: 0.00774407s
+adjoint transformation: 0.00778103s
+adjoint transformation: 0.00770116s
+adjoint transformation: 0.00797486s
+adjoint transformation: 0.00770497s
+average runtime: 0.0079495s
+deleting nuFFT implementation
+implementation no. 17
+computing implementation data: 0.0887401s
+tuning: 0.031127s
+adjoint transformation: 0.00752592s
+adjoint transformation: 0.00678706s
+adjoint transformation: 0.00664401s
+adjoint transformation: 0.00639105s
+adjoint transformation: 0.00643301s
+adjoint transformation: 0.00647783s
+adjoint transformation: 0.00642109s
+adjoint transformation: 0.00664806s
+adjoint transformation: 0.00638485s
+adjoint transformation: 0.00648093s
+average runtime: 0.00661938s
+deleting nuFFT implementation
+implementation no. 18
+computing implementation data: 0.085429s
+tuning: 0.01002s
+adjoint transformation: 0.00876594s
+adjoint transformation: 0.00722694s
+adjoint transformation: 0.00733113s
+adjoint transformation: 0.00727916s
+adjoint transformation: 0.00723815s
+adjoint transformation: 0.0071981s
+adjoint transformation: 0.00720406s
+adjoint transformation: 0.00726891s
+adjoint transformation: 0.00720596s
+adjoint transformation: 0.00749087s
+average runtime: 0.00742092s
+deleting nuFFT implementation
+implementation no. 19
+computing implementation data: 0.083379s
+tuning: 0.00989318s
+adjoint transformation: 0.00678992s
+adjoint transformation: 0.00553298s
+adjoint transformation: 0.00580812s
+adjoint transformation: 0.0055511s
+adjoint transformation: 0.00543404s
+adjoint transformation: 0.00563812s
+adjoint transformation: 0.00545788s
+adjoint transformation: 0.00550508s
+adjoint transformation: 0.00576401s
+adjoint transformation: 0.00562096s
+average runtime: 0.00571022s
+deleting nuFFT implementation
+optimal implementation is no. 9
+writing implementation to file: 0.00727892s
+cleaning external libraries
+deleting nuFFT implementation
+../bin/nufftw_double 1 2 128 128 -3 1.2 2 20 spm nufft ../data/spiral2D_phantom_traj.db ../data/spiral2D_phantom_optimal.imp: Segmentation fault
+</pre><p>Use the pre-written optimal nuFFT implementation file for nuFFT:</p><pre class="codeinput"><span class="syscmd">!../bin/nufft_double 1 adjoint ../data/spiral2d_phantom_imagenufft.cdb ../data/spiral2D_phantom_data.cdb ../data/spiral2D_phantom_optimal.imp</span>
+</pre><pre class="codeoutput">** nuFFT **
+transform initialization and data loading: 
+	loading implementation from file: 0.00927806s
+	initializing external libraries: 1.00447s
+	tuning: 0.0132799s
+1.02806s
+adjoint transformation: 0.00496387s
+deleting nuFFT implementation
+cleaning external libraries
+</pre><pre class="codeinput">imagenufft = reshape(vec2complex(readbin(<span class="string">'../data/spiral2d_phantom_imagenufft.cdb'</span>,<span class="string">'double'</span>)),128,128);
+e = get_image_errors(imagenudft,imagenufft);
+figure
+subplot(131)
+imshowz(imagenudft)
+title(<span class="string">'adjoint nuDFT'</span>)
+subplot(132)
+imshowz(imagenufft)
+title(<span class="string">'adjoint nuFFT'</span>)
+subplot(133)
+imshowz(e)
+colorbar
+title(<span class="string">'normalized error'</span>)
+</pre><pre class="codeoutput">max error: 0.00074529
+</pre><img vspace="5" hspace="5" src="nuFFTW_cli_demo_02.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2012b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% nuFFTW command-line interface demo
+% This demo explains how to use the command-line interface of the nuFFTW library.
+
+%% nuDFT
+!../bin/nudft_double 1 adjoint ../data/spiral2d_phantom_imagenudft.cdb ../data/spiral2d_phantom_data.cdb 2 128 128 ../data/spiral2d_phantom_traj.db
+imagenudft = reshape(vec2complex(readbin('../data/spiral2d_phantom_imagenudft.cdb','double')),128,128);
+%%
+% Wow, that's a lot of time for such a small trajectory!
+
+%% nuFFT
+!../bin/nufft_double 1 adjoint ../data/spiral2d_phantom_imagenufft.cdb ../data/spiral2d_phantom_data.cdb 2 128 128 -3 2 spm ../data/spiral2d_phantom_traj.db
+imagenufft = reshape(vec2complex(readbin('../data/spiral2d_phantom_imagenufft.cdb','double')),128,128);
+%%
+% That was faster.
+%
+% Let's check the accuracy:
+e = get_image_errors(imagenudft,imagenufft);
+%%
+% The error between the direct nuFT (nuDFT) and the nuFFT matches the input maximum
+% aliasing error with which we created the nuFFT implementation.
+%%
+figure
+subplot(131)
+imshowz(imagenudft)
+title('adjoint nuDFT')
+subplot(132)
+imshowz(imagenufft)
+title('adjoint nuFFT')
+subplot(133)
+imshowz(e)
+colorbar
+title('normalized error')
+
+%% Write nuFFT implementation to file
+!../bin/write_nufft_impfile_double 1 2 128 128 -3 2 spm  ../data/spiral2d_phantom_traj.db ../data/spiral2d_phantom.imp
+%%
+% Now we will perform an adjoint and forward nuFFT using this pre-written
+% nuFFT implememntation file
+!../bin/nufft_double 1 adjoint ../data/spiral2d_phantom_imagenufft.cdb ../data/spiral2d_phantom_data.cdb ../data/spiral2d_phantom.imp
+%%
+!../bin/nufft_double 1 forward ../data/spiral2d_phantom_imagenufft.cdb ../data/spiral2d_phantom_data2.cdb ../data/spiral2d_phantom.imp
+%%
+% Check consistency between the forward and adjoint operators:
+trajdata = readbin('../data/spiral2d_phantom_traj.db','double');
+Nsamples = length(trajdata)/3;
+trajdata = reshape(trajdata,3,Nsamples);
+trajectory = trajdata(1:2,:)';
+dcf = trajdata(3,:)';
+
+kdata = vec2complex(readbin('../data/spiral2d_phantom_data.cdb','double'));
+kdata_dc = kdata .* sqrt(dcf);
+
+imagenufft_vec = vec2complex(readbin('../data/spiral2d_phantom_imagenufft.cdb','double'));
+
+kdata_dc2 = vec2complex(readbin('../data/spiral2d_phantom_data2.cdb','double'));
+
+kdata_dc2'*kdata_dc-imagenufft_vec'*imagenufft_vec
+
+%% nuFFTW - Auto-tune the nuFFT
+!../bin/nufftw_double 1 2 128 128 -3 1.2 2 20 spm nufft ../data/spiral2D_phantom_traj.db ../data/spiral2D_phantom_optimal.imp
+%%
+% Use the pre-written optimal nuFFT implementation file for nuFFT:
+!../bin/nufft_double 1 adjoint ../data/spiral2d_phantom_imagenufft.cdb ../data/spiral2D_phantom_data.cdb ../data/spiral2D_phantom_optimal.imp
+%%
+imagenufft = reshape(vec2complex(readbin('../data/spiral2d_phantom_imagenufft.cdb','double')),128,128);
+e = get_image_errors(imagenudft,imagenufft);
+figure
+subplot(131)
+imshowz(imagenudft)
+title('adjoint nuDFT')
+subplot(132)
+imshowz(imagenufft)
+title('adjoint nuFFT')
+subplot(133)
+imshowz(e)
+colorbar
+title('normalized error')
+
+##### SOURCE END #####
+--></body></html>

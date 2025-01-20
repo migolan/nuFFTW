@@ -1,0 +1,65 @@
+function nufft_st = init_nufft(kcoord, sqrtdcf, N, maxerr, alpha)
+% INIT_NUFFT - nuFFT initializing function
+%
+%   nufft_st = INIT_NUFFT(kcoord, N, maxerr, alpha)
+%
+%   Arguments:
+%   kcoord - k-sapce sample coordinates, normalized to region [-0.5,0.5] in
+%       each dimension. Array size is [Mx2], where M is the number of
+%       nonuniform samples.
+%   sqrtdcf - square root of density compensation factors
+%   N (optional) - Image size in pixels. Default value is 128.
+%   maxerr (optional) - Maximum aliasing error allowed, as defined in
+%       Beatty's paper. Default value is 1e-3.
+%   alpha (optional) - Grid oversampling ratio. Default value is 2.
+%   nufft_st - data structure defining the non-uniform Fourier transform
+%       and it's adjoint, between k-space data sampled on the non-uniform
+%       sampling locations kcoord, and a uniform grid in image space.
+%
+%   This function assumes 2-dimensional data with equal gridding parameters
+%   in both axes.
+%   See nufft_example.m for a usage example.
+
+% Michal Zarrouk, June 2013.
+
+
+% Set default parameter values
+if nargin < 5 || isempty(alpha)
+    alpha = 2;
+end
+if nargin < 4 || isempty(maxerr)
+    maxerr = 1e-3;
+end
+if nargin < 3 || isempty(N)
+    N = 128 * ones(1,2);
+end
+
+% number of pixels in each dimension of the oversampled image
+G = OversampledImageSize(alpha,N);
+
+% nstart is the index within the oversampled image where the actual FOV starts.
+nstart = ceil((G-N)/2);
+
+% Gridding interpolation kernel width, in pixel units, that matches the
+% maximum aliasing error and grid oversampling ratio requirements
+for i = 1:length(N)
+    W(i) = KernelWidth(maxerr, alpha, N(i));
+end
+
+% sparse gridding (convolution) matrix
+convmat = compute_gridding_matrix(kcoord, sqrtdcf, N, maxerr, alpha, W);
+
+% deapodization matrix
+deapmat = compute_deapodization_matrix(N, maxerr, alpha, W);
+
+nufft_st.sqrtdcf = sqrtdcf;
+nufft_st.N = N;
+nufft_st.maxerr = maxerr;
+nufft_st.alpha = alpha;
+nufft_st.W = W;
+nufft_st.G = G;
+nufft_st.nstart = nstart;
+nufft_st.convmat = convmat;
+nufft_st.deapmat = deapmat;
+
+
