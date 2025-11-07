@@ -4,7 +4,7 @@ nuFFTW is an auto-tuning, parallel library for computation of the non-uniform fa
 
 For instructions on how to download and install the nuFFTW, please refer to the [installation instructions](INSTALL).
 
-The current nuFFTW build has a command-line interface and a mex interface.
+The nuFFTW has a command-line interface and a mex interface.
 The following demos and overviews of these interfaces are available:
 
 | | nuFFTW mex API | nuFFTW CLI | nuFFT mex API |
