@@ -8,7 +8,7 @@ The current nuFFTW build has a command-line interface and a mex interface.
 The following demos and overviews of these interfaces are available:
 
 | | nuFFTW mex API | nuFFTW CLI | nuFFT mex API |
-|-------------|-----------|-----------|-----------|
+|:--------|:--------:|:--------:|:--------:|
 | overview    | [✅](nuFFTW/matlab/html/nuFFTW_mex_overview.html) | [✅](nuFFTW/matlab/html/nuFFTW_cli_overview.html) | |
 | html demo   | [✅](nuFFTW/matlab/html/nuFFTW_mex_demo.html) | [✅](nuFFTW/matlab/html/nuFFTW_cli_demo.html) | [✅](nuFFTW/matlab/html/nuFFT_mex_demo.html)|
 | matlab demo | [✅](nuFFTW/matlab/nuFFTW_mex_demo.m) | [✅](nuFFTW/matlab/nuFFTW_cli_demo.m) | [✅](nuFFTW/matlab/nuFFT_mex_demo.m) |
