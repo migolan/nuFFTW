@@ -2,10 +2,10 @@ nuFFTW is an auto-tuning, parallel library for computation of the non-uniform fa
 
 <p align="center"><img src="nuFFTW ISMRM13 poster.png" alt="ISMRM13 poster" width="600"/></p>
 
-**Installation**  
+## Installation
 For instructions on how to download and install the nuFFTW, please refer to the [installation instructions](INSTALL).
 
-**Usage**  
+## Usage
 The nuFFTW has a command-line interface and a mex interface.
 The following demos and overviews of these interfaces are available:
 
@@ -17,7 +17,7 @@ The following demos and overviews of these interfaces are available:
 
 Note that the mex interface can be used either in double precision or single but not both at the same time, otherwise MATLAB will likely crash.
 
-**Tutorial**  
+## Tutorial
 A tutorial on the nuFFT is available [here](nuFFT_tutorial/code/nufft_tutorial).
 
 Please let me know of any problems you encounter during installation or running, so I can track and debug them.
