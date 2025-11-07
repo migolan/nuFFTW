@@ -1,4 +1,4 @@
-nuFFTW is an auto-tuning, parallel library for computation of the non-uniform fast Fourier transforms (nuFFT).
+nuFFTW is an auto-tuning, parallel library for computation of the non-uniform fast Fourier transform (nuFFT).
 
 <p align="center"><img src="nuFFTW ISMRM13 poster.png" alt="ISMRM13 poster" width="600"/></p>
 
